@@ -15,6 +15,7 @@ movie-series-analysis
 ├── src
 │   ├── data_processing.py
 │   ├── analysis.py
+│   ├── load_data.py
 │   └── visualization.py
 ├── requirements.txt
 ├── .gitignore
@@ -34,6 +35,7 @@ movie-series-analysis
 
 - **src/data_processing.py**: Functions for data cleaning and preprocessing, including loading, cleaning, and saving processed data.
 - **src/analysis.py**: Functions for analyzing the dataset, including statistical analysis and methods to derive insights.
+- **src/load_data.py**: Functions for loading and managing data from various sources.
 - **src/visualization.py**: Functions for creating visualizations of the data using libraries like Matplotlib or Seaborn.
 
 ### Requirements
@@ -48,9 +50,18 @@ movie-series-analysis
 
 1. Clone the repository to your local machine.
 2. Navigate to the project directory.
-3. Install the required dependencies using the command:
+3. Create a virtual environment and activate it:
+   ```
+   python -m venv .venv
+   .\.venv\Scripts\activate
+   ```
+4. Install the required dependencies:
    ```
    pip install -r requirements.txt
+   ```
+5. Run the Jupyter notebook for analysis:
+   ```
+   jupyter notebook notebooks/analysis.ipynb
    ```
 
 ## Usage Guidelines
