@@ -1,6 +1,6 @@
-# Movie and Series Analysis Project
+# Movie and Series Recommendation System
 
-This project aims to analyze a movie or series dataset obtained from Kaggle. The analysis includes data cleaning, exploratory data analysis, and visualization of insights derived from the dataset.
+This project focuses on building a recommendation system for movies and series. The system leverages data analysis, feature engineering, and similarity models to provide personalized recommendations.
 
 ## Project Structure
 
@@ -8,15 +8,25 @@ This project aims to analyze a movie or series dataset obtained from Kaggle. The
 movie-series-analysis
 ├── data
 │   ├── raw
-│   │   └── dataset.csv
-│   └── processed
+│   │   ├── best_movie_by_year_netflix.csv
+│   │   └── raw_titles.csv
+│   ├── processed
+│       └── cleaned_titles.csv
 ├── notebooks
-│   └── analysis.ipynb
+│   └── 01_data_understanding.ipynb
 ├── src
-│   ├── data_processing.py
-│   ├── analysis.py
-│   ├── load_data.py
-│   └── visualization.py
+│   ├── data
+│   │   ├── __init__.py
+│   │   └── data_cleaning.py
+│   ├── features
+│   │   ├── __init__.py
+│   │   └── genre_vectorizer.py
+│   ├── models
+│   │   ├── __init__.py
+│   │   └── similarity.py
+│   ├── recommender
+│       ├── __init__.py
+│       └── recommend.py
 ├── requirements.txt
 ├── .gitignore
 └── README.md
@@ -24,48 +34,25 @@ movie-series-analysis
 
 ### Data
 
-- **data/raw/dataset.csv**: Contains the raw movie or series dataset downloaded from Kaggle, including various attributes related to the movies or series.
-- **data/processed**: This directory will hold processed data files after data cleaning and transformation.
+- **data/raw/best_movie_by_year_netflix.csv**: Contains information about the best movies by year on Netflix.
+- **data/raw/raw_titles.csv**: Raw dataset of movie and series titles with various attributes.
+- **data/processed/cleaned_titles.csv**: Processed dataset after data cleaning and transformation.
 
 ### Notebooks
 
-- **notebooks/analysis.ipynb**: A Jupyter notebook for exploratory data analysis, featuring code and visualizations to analyze the dataset.
+- **notebooks/01_data_understanding.ipynb**: A Jupyter notebook for understanding the dataset, including exploratory data analysis and visualization.
 
 ### Source Code
 
-- **src/data_processing.py**: Functions for data cleaning and preprocessing, including loading, cleaning, and saving processed data.
-- **src/analysis.py**: Functions for analyzing the dataset, including statistical analysis and methods to derive insights.
-- **src/load_data.py**: Functions for loading and managing data from various sources.
-- **src/visualization.py**: Functions for creating visualizations of the data using libraries like Matplotlib or Seaborn.
+- **src/data/data_cleaning.py**: Functions for cleaning and preprocessing the raw data.
+- **src/features/genre_vectorizer.py**: Code for feature engineering, including vectorization of genres.
+- **src/models/similarity.py**: Implementation of similarity models for recommendations.
+- **src/recommender/recommend.py**: Main logic for generating movie and series recommendations.
 
 ### Requirements
 
-- **requirements.txt**: Lists the dependencies required for the project, including libraries such as pandas, numpy, matplotlib, seaborn, and Jupyter.
+- **requirements.txt**: Lists the dependencies required for the project, including libraries such as pandas, numpy, scikit-learn, and Jupyter.
 
 ### Git
 
-- **.gitignore**: Specifies files and directories to be ignored by Git, such as data files and Jupyter notebook checkpoints.
-
-## Setup Instructions
-
-1. Clone the repository to your local machine.
-2. Navigate to the project directory.
-3. Create a virtual environment and activate it:
-   ```
-   python -m venv .venv
-   .\.venv\Scripts\activate
-   ```
-4. Install the required dependencies:
-   ```
-   pip install -r requirements.txt
-   ```
-5. Run the Jupyter notebook for analysis:
-   ```
-   jupyter notebook notebooks/analysis.ipynb
-   ```
-
-## Usage Guidelines
-
-- Use the Jupyter notebook for exploratory data analysis.
-- Utilize the source code files for data processing, analysis, and visualization tasks.
-- Ensure to keep the raw dataset intact and save processed data in the designated directory.
+- **.gitignore**: Specifies files and directories to be ignored by Git, such as data files and virtual environment folders.
