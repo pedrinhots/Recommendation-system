@@ -98,18 +98,39 @@ cleaned_df = cleaned_df[cleaned_df['imdb_votes'] >= vote_threshold] # Filter out
 
 cleaned_df = cleaned_df[(cleaned_df['imdb_score'] >= 0) & (cleaned_df['imdb_score'] <= 10)]
 
-# ==========================================================
+# ====================================================================================================================
 # 7. WEIGHTED RATING
-# ==========================================================
+# ====================================================================================================================
 
+nulls = cleaned_df[['imdb_votes', 'imdb_score']].isna().sum()
 
-
-# ==========================================================
+if nulls.sum() > 0:
+    print("Warning: There are null values in 'imdb_votes' or 'imdb_score'. Weighted rating cannot be calculated for these entries.")
+else: 
+    print("No null values in 'imdb_votes' or 'imdb_score'. Proceeding with weighted rating calculation.")
+    #Média Global do score:
+    C = cleaned_df['imdb_score'].mean()
+    #Minimo de votos:
+    m = cleaned_df['imdb_votes'].min()
+    #Criando o Weighted Rating:
+    cleaned_df['weighted_rating'] = (
+        (cleaned_df['imdb_votes'] / (cleaned_df['imdb_votes'] + m)) 
+        * cleaned_df['imdb_score'] + (m / (cleaned_df['imdb_votes'] + m) * C)
+    )
+    cleaned_df['weighted_rating'] = cleaned_df['weighted_rating'].round(3)
+    #Verificando se a coluna criada faz sentido:
+    print(cleaned_df[['title', 'imdb_score', 'imdb_votes', 'weighted_rating']].head(10))
+    print(cleaned_df.sort_values('weighted_rating', ascending=False).head(10))
+    
+    #PERCEBA QUE WEIGHTED RATING NUNCA MAIOR QUE IMDB SCORE, POIS O PESO DO IMDB SCORE É MAIOR QUE O PESO DA MEDIA GLOBAL, ENTÃO O WEIGHTED RATING VAI SER SEMPRE INFERIOR
+    #poucos votos, WR se aproxima da média global, muitos votos, WR se aproxima do imdb_score.
+    #O score final deve seguir uma lógica mais ou menos assim: final_score = similarity * weighted_rating
+    #O similarity será calculado indivudlamente para cada usuário, e o weighted_rating é um score geral de qualidade do filme/serie, que leva em consideração tanto a nota média quanto a quantidade de votos, para evitar que filmes com poucas avaliações tenham uma nota muito alta apenas por causa de algumas avaliações positivas. 
+# ====================================================================================================================
 # 8. EXPORT CLEAN DATA
-# ==========================================================
+# ====================================================================================================================
 
-checkNullValues(cleaned_df)
-
+#checkNullValues(cleaned_df)
 exportCleanData(cleaned_df, r'C:\Users\pedro\OneDrive\Desktop\Reccomendation_System\movie-series-analysis\data\processed\cleaned_titles.csv')
 
 print("Fim do codigo")
